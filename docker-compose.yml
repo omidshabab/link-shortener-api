@@ -19,11 +19,13 @@ services:
   api:
     build: .
     container_name: linkshortener_api
+    env_file:
+      - .env
     environment:
       DATABASE_URL: postgresql://linkuser:linkpass@postgres:5432/linkshortener?schema=public
       PORT: 3000
       NODE_ENV: production
-      CUSTOM_DOMAIN: https://yourdomain.com
+      CUSTOM_DOMAIN: ${CUSTOM_DOMAIN:-https://yourdomain.com}
       MASTER_API_KEY: ${MASTER_API_KEY}
     ports:
       - "3000:3000"
