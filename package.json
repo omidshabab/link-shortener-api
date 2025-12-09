@@ -1,0 +1,38 @@
+{
+  "name": "link-shortener-api",
+  "version": "1.0.0",
+  "description": "Simple link shortener API with custom domain support",
+  "main": "dist/index.js",
+  "scripts": {
+    "dev": "nodemon --exec ts-node src/index.ts",
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "prisma:generate": "bunx --bun prisma generate",
+    "prisma:migrate": "bunx --bun prisma migrate dev",
+    "prisma:deploy": "bunx --bun prisma migrate deploy",
+    "prisma:studio": "bunx --bun prisma studio"
+  },
+  "keywords": ["link-shortener", "url-shortener", "api"],
+  "author": "omidshabab",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.6",
+    "@types/node": "^24.10.2",
+    "@types/pg": "^8.15.6",
+    "nodemon": "^3.1.11",
+    "prisma": "^7.1.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.3"
+  },
+  "dependencies": {
+    "@prisma/adapter-pg": "^7.1.0",
+    "@prisma/client": "^7.1.0",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
+    "express": "^5.0.0",
+    "helmet": "^8.1.0",
+    "nanoid": "^5.1.6",
+    "pg": "^8.16.3"
+  }
+}
