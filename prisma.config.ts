@@ -1,13 +1,11 @@
 import { defineConfig } from '@prisma/config';
 
-const url = process.env.DATABASE_URL;
-
-if (!url) {
-  throw new Error('DATABASE_URL is not set');
-}
+// DATABASE_URL will be provided via environment variables (from docker-compose)
+const databaseUrl = process.env.DATABASE_URL || 'postgresql://dummy:dummy@localhost:5432/dummy';
 
 export default defineConfig({
+  schema: 'prisma/schema.prisma',
   datasource: {
-    url,
+    url: databaseUrl,
   },
 });
