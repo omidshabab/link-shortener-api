@@ -1,0 +1,37 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: linkshortener_db
+    environment:
+      POSTGRES_USER: linkuser
+      POSTGRES_PASSWORD: linkpass
+      POSTGRES_DB: linkshortener
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U linkuser -d linkshortener"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  api:
+    build: .
+    container_name: linkshortener_api
+    environment:
+      DATABASE_URL: postgresql://linkuser:linkpass@postgres:5432/linkshortener?schema=public
+      PORT: 3000
+      NODE_ENV: production
+      CUSTOM_DOMAIN: https://yourdomain.com
+      MASTER_API_KEY: ${MASTER_API_KEY}
+    ports:
+      - "3000:3000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    command: >
+      sh -c "npx prisma migrate deploy && npm start"
+
+volumes:
+  postgres_data:
